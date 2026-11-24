@@ -1,0 +1,28 @@
+{
+  "id": "instacart",
+  "category": "bi",
+  "tools": [
+    "BigQuery",
+    "dbt",
+    "Power BI",
+    "Python",
+    "SQL"
+  ],
+  "github": "https://github.com/Burak-Gokce/instacart-dbt-project",
+  "tr": {
+    "title": "Instacart Market Basket Analysis",
+    "problem": "E-ticarette tekrar satın alma davranışını anlamak.",
+    "data": "Instacart siparişleri, müşterileri ve ürünleri. Rapor yaklaşık 3,35 milyon siparişi kapsıyor.",
+    "method": "BigQuery ve dbt ile staging, intermediate ve mart katmanları. Power BI’da zaman, sadakat ve ürün analizi. Tekrar satın alma için lojistik regresyon ve Random Forest karşılaştırması.",
+    "result": "Sipariş sıklığı segmentlerinde yeniden satın alma oranı %26’dan %76’ya çıkıyor. Random Forest F1 0,35, ROC-AUC 0,738 ve PR-AUC 0,289.",
+    "limits": "Çoğunluk baseline’ı %90,22 accuracy ile Random Forest’ın %84,85 değerini aşıyor. Dengeli lojistik regresyon daha yüksek recall sağlıyor. Test ayrımı ve KPI paydaları teyit bekliyor."
+  },
+  "en": {
+    "title": "Instacart Market Basket Analysis",
+    "problem": "Understanding repeat purchases in online grocery.",
+    "data": "Instacart orders, customers and products. The report covers about 3.35 million orders.",
+    "method": "BigQuery and dbt staging, intermediate and mart layers. Time, loyalty and product analysis in Power BI. Logistic regression and Random Forest compared for repeat purchases.",
+    "result": "Reorder rates rise from 26% to 76% across order-frequency segments. Random Forest achieved F1 0.35, ROC-AUC 0.738 and PR-AUC 0.289.",
+    "limits": "The majority baseline has 90.22% accuracy versus 84.85% for Random Forest. Balanced logistic regression has higher recall. The test split and KPI denominators await confirmation."
+  }
+}

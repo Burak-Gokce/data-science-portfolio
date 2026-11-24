@@ -1,0 +1,27 @@
+{
+  "id": "the-movies",
+  "category": "bi",
+  "tools": [
+    "BigQuery",
+    "dbt",
+    "Power BI",
+    "Python"
+  ],
+  "github": "https://github.com/Burak-Gokce/movies-dbt-project",
+  "tr": {
+    "title": "The Movies",
+    "problem": "Film türü, süre, bütçe ve gişe arasındaki ilişkileri incelemek.",
+    "data": "Kaggle TMDB The Movies Dataset. Özet panelinde 5.275 film, süre analizinde ek MovieLens verisi.",
+    "method": "Tür ve puan, tür payının zamanla değişimi, süre ve puan, bütçe ve gelir olmak üzere dört araştırma sorusu. Log gişe geliri için beş model.",
+    "result": "Log bütçe ve log gelir korelasyonu yaklaşık 0,73. Zarar oranı %29,27. Linear Regression test R² 0,523, log ölçekte MAE 1,23 ve RMSE 1,81.",
+    "limits": "Korelasyon nedensel etkiyi ölçmez. Geliri 10.000 doların altında görünen 84 filmde büyük tahmin hataları yoğunlaşıyor. Test protokolü ve hipotez testlerinin ayrıntıları teyit bekliyor."
+  },
+  "en": {
+    "title": "The Movies",
+    "problem": "Exploring relationships between genre, runtime, budget and box office.",
+    "data": "Kaggle’s TMDB The Movies Dataset. The overview reports 5,275 films, with supplementary MovieLens data in the runtime analysis.",
+    "method": "Four research questions cover genre and rating, genre share over time, runtime and rating, and budget and revenue. Five models compared for log box office revenue.",
+    "result": "Log budget and log revenue correlation was about 0.73. The loss rate was 29.27%. Linear Regression achieved test R² 0.523, with MAE 1.23 and RMSE 1.81 on the log scale.",
+    "limits": "Correlation measures association. Large prediction errors cluster among 84 films recorded below $10,000 in revenue. Test protocol and hypothesis-test details await confirmation."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "olist-bad-reviews",
+  "category": "nlp",
+  "tools": [
+    "Python",
+    "Scikit-learn",
+    "LDA"
+  ],
+  "github": null,
+  "tr": {
+    "title": "Olist Bad Reviews Analysis",
+    "problem": "Düşük puanlı e-ticaret yorumlarında şikâyet temalarını belirlemek.",
+    "data": "Portekizce Olist yorumları. 1–3 puanlı 9.658 yorum, incelenen kayıtların %26,72’si.",
+    "method": "Stemming, BoW ve üç konulu LDA. Ayrıca TF-IDF unigram/bigram ile ikinci bir LDA pipeline’ı.",
+    "result": "Teslimat ve ürün beklentisi gibi temalar görüldü. Seçili kategori alt kümesindeki konu sayıları 194, 129 ve 91.",
+    "limits": "Alt küme tüm yorumları temsil etmez. Satıcı eşleştirme çıktıları tutarsız olduğu için satıcı bazlı çıkarımlar beklemede."
+  },
+  "en": {
+    "title": "Olist Bad Reviews Analysis",
+    "problem": "Identifying common complaints in low-rated e-commerce reviews.",
+    "data": "Portuguese-language Olist reviews. The 9,658 reviews rated 1–3 made up 26.72% of the reviewed records.",
+    "method": "Stemming, bag-of-words and three-topic LDA, plus a separate LDA pipeline with TF-IDF unigrams and bigrams.",
+    "result": "Themes included delivery and product expectations. Topic counts in the selected category subset were 194, 129 and 91.",
+    "limits": "The subset covers selected categories only. Seller-level conclusions are withheld because matching outputs were inconsistent."
+  }
+}

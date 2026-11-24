@@ -1,0 +1,26 @@
+{
+  "id": "regression-models",
+  "category": "ml",
+  "tools": [
+    "Python",
+    "Scikit-learn",
+    "Jupyter"
+  ],
+  "github": "https://github.com/Burak-Gokce/Do-rusal_Regresyon_Modelleri/blob/main/dogrusal_regresyon/dogRegMod.ipynb",
+  "tr": {
+    "title": "Regresyon Modelleri",
+    "problem": "Doğrusal modellerin ve düzenlileştirmenin tahmin hatasına etkisini incelemek.",
+    "data": "Advertising satış verileri ve eksik satırlar çıkarıldıktan sonra 263 Hitters gözlemi.",
+    "method": "Basit ve çoklu doğrusal regresyon, Ridge, Lasso ve ElasticNet. Çapraz doğrulama ile hiperparametre ayarı, Hitters’ta %25 test ayrımı.",
+    "result": "Hitters testinde Lasso RMSE 356,10 ve R² 0,4142, ElasticNet RMSE 357,17 ve R² 0,4107.",
+    "limits": "Ayarlı iki modelde test hatası arttı. Bazı Ridge ve Advertising çıktıları kayıtlı değil. Ortak basit baseline yok."
+  },
+  "en": {
+    "title": "Regression Models",
+    "problem": "Assessing how linear models and regularization affect prediction error.",
+    "data": "Advertising sales data and 263 Hitters observations after dropping missing rows.",
+    "method": "Simple and multiple linear regression, Ridge, Lasso and ElasticNet. Cross-validated tuning and a 25% Hitters test split.",
+    "result": "Hitters test results were RMSE 356.10 and R² 0.4142 for Lasso, and RMSE 357.17 and R² 0.4107 for ElasticNet.",
+    "limits": "Test error increased for both tuned models. Some Ridge and Advertising outputs are missing. A shared simple baseline was unavailable."
+  }
+}

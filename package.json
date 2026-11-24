@@ -1,0 +1,15 @@
+{
+  "name": "burak-gokce-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node scripts/verify.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.18.0",
+    "chart.js": "^4.5.0"
+  }
+}

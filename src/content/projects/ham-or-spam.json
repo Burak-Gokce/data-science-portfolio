@@ -1,0 +1,26 @@
+{
+  "id": "ham-or-spam",
+  "category": "nlp",
+  "tools": [
+    "Python",
+    "NLTK",
+    "Scikit-learn"
+  ],
+  "github": null,
+  "tr": {
+    "title": "Ham or Spam",
+    "problem": "Normal ve spam e-postaları ayırmak.",
+    "data": "5.728 e-posta ve vektörleştirme sonrası 30.988 terim.",
+    "method": "NLTK temizleme, stop-word çıkarma, lemmatization, CountVectorizer ve Multinomial Naive Bayes.",
+    "result": "Beş katlı CV ortalama accuracy %98,95.",
+    "limits": "Sözlük CV öncesinde tüm veriden öğrenildi. Daha güvenilir ölçüm için vektörleştirme her katın eğitim bölümüne alınmalı. Sınıf dağılımı ve baseline çıktısı yok."
+  },
+  "en": {
+    "title": "Ham or Spam",
+    "problem": "Distinguishing legitimate email from spam.",
+    "data": "5,728 emails and 30,988 terms after vectorization.",
+    "method": "NLTK cleaning, stop-word removal, lemmatization, CountVectorizer and Multinomial Naive Bayes.",
+    "result": "Mean five-fold CV accuracy was 98.95%.",
+    "limits": "The vocabulary was learned before cross-validation. Fitting it within each training fold would improve the evaluation design. Class support and baseline outputs are unavailable."
+  }
+}

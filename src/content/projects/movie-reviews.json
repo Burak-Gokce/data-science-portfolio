@@ -1,0 +1,26 @@
+{
+  "id": "movie-reviews",
+  "category": "nlp",
+  "tools": [
+    "Python",
+    "NLTK",
+    "Scikit-learn"
+  ],
+  "github": null,
+  "tr": {
+    "title": "Movie Reviews",
+    "problem": "Film yorumlarının duygu sınıfını tahmin etmek.",
+    "data": "2.000 olumlu veya olumsuz etiketli yorum.",
+    "method": "Temizleme ve lemmatization sonrası CountVectorizer ile Multinomial Naive Bayes pipeline’ı. Unigram ve bigram karşılaştırması.",
+    "result": "Beş katlı CV accuracy unigram için %81,55 ve bigram için %82,80.",
+    "limits": "1,25 yüzde puanlık fark bu deney için geçerli. Sınıf desteği ve anlamlılık testi kayıtlı değil."
+  },
+  "en": {
+    "title": "Movie Reviews",
+    "problem": "Predicting sentiment in movie reviews.",
+    "data": "2,000 reviews labeled positive or negative.",
+    "method": "Cleaning and lemmatization followed by a CountVectorizer and Multinomial Naive Bayes pipeline. Unigrams and bigrams compared.",
+    "result": "Five-fold CV accuracy was 81.55% for unigrams and 82.80% for bigrams.",
+    "limits": "The 1.25 percentage-point gain applies to this experiment. Class support and significance tests were not recorded."
+  }
+}

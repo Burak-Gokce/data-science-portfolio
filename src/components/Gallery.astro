@@ -1,0 +1,18 @@
+---
+import { asset, type Lang } from '../data';
+import ImageViewer from './ImageViewer.astro';
+const { lang, items } = Astro.props as { lang: Lang; items: { file: string; caption: string[] }[] };
+const tr = lang === 'tr';
+---
+<section class="gallery" aria-labelledby="gallery-heading">
+  <h2 id="gallery-heading">{tr ? 'Rapor görselleri' : 'Report visuals'}</h2>
+  <div class="gallery-grid">
+    {items.map(item => <figure>
+      <a class="zoom-image" href={asset(item.file)} data-caption={item.caption[tr ? 0 : 1]} aria-label={(tr ? 'Büyüt · ' : 'Enlarge · ') + item.caption[tr ? 0 : 1]}>
+        <img src={asset(item.file)} alt={item.caption[tr ? 0 : 1]} loading="lazy" />
+      </a>
+      <figcaption>{item.caption[tr ? 0 : 1]}</figcaption>
+    </figure>)}
+  </div>
+  <ImageViewer lang={lang} />
+</section>

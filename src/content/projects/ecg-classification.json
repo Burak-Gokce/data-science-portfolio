@@ -1,0 +1,26 @@
+{
+  "id": "ecg-classification",
+  "category": "dl",
+  "tools": [
+    "TensorFlow",
+    "Keras",
+    "GRU"
+  ],
+  "github": null,
+  "tr": {
+    "title": "ECG Classification with RNN",
+    "problem": "Dengesiz EKG sınıflarında accuracy’nin neyi gizleyebildiğini incelemek.",
+    "data": "87.554 atım, 5 sınıf, 17–187 adım ve %20 stratified test ayrımı.",
+    "method": "-1 ile padding ve mask. GRU(20) → GRU(20) → Dense(50, ReLU) → Dense(5, softmax).",
+    "result": "Test accuracy %82,77, loss 0,6578. Tüm 17.511 tahmin sınıf 0, çoğunluk baseline’ı yaklaşık %82,77.",
+    "limits": "Azınlık sınıfları yakalanmadı. Hasta bazında ayrım teyit edilmedi. Bulgular eğitim deneyi kapsamındadır."
+  },
+  "en": {
+    "title": "ECG Classification with RNN",
+    "problem": "Examining what accuracy can conceal in imbalanced ECG classes.",
+    "data": "87,554 beats, 5 classes, 17–187 steps and a stratified 20% test split.",
+    "method": "Padding with -1 and masking. GRU(20) → GRU(20) → Dense(50, ReLU) → Dense(5, softmax).",
+    "result": "Test accuracy was 82.77% and loss was 0.6578. All 17,511 predictions were class 0, matching the approximately 82.77% majority baseline.",
+    "limits": "The model missed all minority classes. Patient-level splitting was unverified. Results apply to the educational experiment."
+  }
+}

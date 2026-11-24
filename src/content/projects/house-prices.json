@@ -1,0 +1,26 @@
+{
+  "id": "house-prices",
+  "category": "ml",
+  "tools": [
+    "Python",
+    "Scikit-learn",
+    "Kaggle"
+  ],
+  "github": null,
+  "tr": {
+    "title": "Kaggle House Prices",
+    "problem": "79 özellikten konut satış fiyatını tahmin etmek.",
+    "data": "House Prices eğitim verisinde 1.460 satır ve 79 özellik bulunuyor.",
+    "method": "Eksik değer doldurma, ölçekleme ve kategorik kodlama. Beş katlı CV ile Decision Tree baseline, Ridge, Random Forest ve Extra Trees.",
+    "result": "Extra Trees CV RMSLE 0,142746. Başarılı Kaggle gönderim skoru 0,14558.",
+    "limits": "CV ile gönderim farklı değerlendirmelerdir. Sıra, yüzdelik dilim ve gönderim dosyasının içeriği doğrulanmadı."
+  },
+  "en": {
+    "title": "Kaggle House Prices",
+    "problem": "Predicting home sale prices from 79 features.",
+    "data": "The House Prices training data contains 1,460 rows and 79 features.",
+    "method": "Imputation, scaling and categorical encoding. Five-fold CV compared a Decision Tree baseline, Ridge, Random Forest and Extra Trees.",
+    "result": "Extra Trees CV RMSLE was 0.142746. The successful Kaggle submission scored 0.14558.",
+    "limits": "Cross-validation and the submission are separate evaluations. Rank, percentile and submission-file contents were unverified."
+  }
+}

@@ -1,0 +1,7 @@
+---
+import Layout from '../components/Layout.astro';
+import { home } from '../data';
+---
+<Layout lang="tr" title="Sayfa bulunamadı · Burak Gökçe" description="Portföy ana sayfasına dön." alternate={home('en')}>
+  <section class="shell detail"><h1>Sayfa bulunamadı</h1><p lang="en">Page not found.</p><div class="actions"><a class="button primary" href={home('tr')}>Ana sayfa</a><a class="button secondary" href={home('en')} lang="en">English home</a></div></section>
+</Layout>

@@ -1,0 +1,26 @@
+{
+  "id": "lda-topic-modeling",
+  "category": "nlp",
+  "tools": [
+    "Python",
+    "Scikit-learn",
+    "LDA"
+  ],
+  "github": null,
+  "tr": {
+    "title": "LDA Topic Modeling",
+    "problem": "Etiketsiz belgelerde tekrar eden temaları keşfetmek.",
+    "data": "Eğitimde sağlanan 1.199 belge ve en fazla 5.000 kelime özelliği.",
+    "method": "Bag-of-words ve beş konulu Latent Dirichlet Allocation. Konular anahtar kelime ağırlıklarıyla yorumlandı.",
+    "result": "Din ve spor/hokey gibi temalar ortaya çıktı. Bir örnek belgede konu 2 ağırlığı %51,47.",
+    "limits": "Örnek belge ağırlığı model doğruluğu anlamına gelmez. Coherence veya harici değerlendirme kaydı yok."
+  },
+  "en": {
+    "title": "LDA Topic Modeling",
+    "problem": "Identifying recurring themes in unlabeled documents.",
+    "data": "1,199 course documents represented by up to 5,000 word features.",
+    "method": "Bag-of-words with five-topic Latent Dirichlet Allocation. Topics were interpreted using keyword weights.",
+    "result": "Themes included religion and sports or hockey. Topic 2 held 51.47% weight in one example document.",
+    "limits": "A document-level topic weight has a different meaning from accuracy. No coherence or external evaluation was recorded."
+  }
+}

@@ -1,0 +1,81 @@
+---
+import Layout from '../../../components/Layout.astro';
+import Gallery from '../../../components/Gallery.astro';
+import MetricChart from '../../../components/MetricChart.astro';
+import { categories, detail, home, languages, media, projects, teams } from '../../../data';
+import { metrics } from '../../../metrics';
+export function getStaticPaths() {
+  return languages.flatMap(lang => projects.map(project => ({
+    params: { lang, section: lang === 'tr' ? 'projeler' : 'projects', id: project.id },
+    props: { lang, project },
+  })));
+}
+const { lang, project } = Astro.props;
+const tr = lang === 'tr';
+const index = tr ? 0 : 1;
+const other = tr ? 'en' : 'tr';
+const copy = project[lang];
+const team = teams[project.id];
+const number = new Intl.NumberFormat(lang, { maximumFractionDigits: 6 });
+const values: Record<string, { value: number; prefix?: string; suffix?: string; label: string[] }[]> = {
+  instacart: [
+    { value: 3.35, suffix: tr ? ' Mn' : ' M', label: ['Toplam sipariş','Total orders'] },
+    { value: 206209, label: ['Benzersiz müşteri','Unique customers'] },
+    { value: 49685, label: ['Benzersiz ürün','Unique products'] },
+    { value: 16.23, label: ['Müşteri başına sipariş','Orders per customer'] },
+    { value: 15.36, label: ['Sipariş aralığı (gün)','Order interval (days)'] },
+    { value: 10.11, label: ['Ortalama sepet büyüklüğü','Average basket size'] },
+    { value: 59.01, prefix: tr ? '%' : '', suffix: tr ? '' : '%', label: ['Yeniden sipariş oranı','Reorder rate'] },
+  ],
+  'the-movies': [
+    { value: 5275, label: ['Film','Films'] },
+    { value: 29.27, prefix: tr ? '%' : '', suffix: tr ? '' : '%', label: ['Zarar oranı','Loss rate'] },
+    { value: .73, label: ['Log bütçe–gelir korelasyonu','Log budget–revenue correlation'] },
+    { value: .523, label: ['Linear Regression test R²','Linear Regression test R²'] },
+  ],
+  'house-prices': [
+    { value: .142746, label: ['Extra Trees · 5 katlı CV RMSLE','Extra Trees · five-fold CV RMSLE'] },
+    { value: .14558, label: ['Kaggle gönderim skoru','Kaggle submission score'] },
+    { value: 1460, label: ['Eğitim örneği','Training rows'] },
+  ],
+};
+---
+<Layout lang={lang} title={copy.title + ' · Burak Gökçe'} description={copy.problem} alternate={detail(other,project.id)}>
+  <article class="shell detail">
+    <a class="back" href={home(lang) + '#projects'}>{tr ? 'Tüm projeler' : 'All projects'}</a>
+    <header class="detail-header">
+      <p class="eyebrow">{categories[lang][project.category]} · {team ? (tr ? 'Ekip projesi' : 'Team project') : project.id === 'house-prices' ? (tr ? 'Yarışma gönderimi' : 'Competition submission') : (tr ? 'Uygulamalı çalışma' : 'Applied project')}</p>
+      <h1>{copy.title}</h1>
+      <p class="intro">{copy.problem}</p>
+      <ul class="tags" aria-label={tr ? 'Teknolojiler' : 'Technologies'}>{project.tools.map(tool => <li>{tool}</li>)}</ul>
+    </header>
+    {values[project.id] && <div class="kpi-grid">
+      {values[project.id].map(kpi => <div class="panel kpi"><strong>{(kpi.prefix ?? '') + number.format(kpi.value) + (kpi.suffix ?? '')}</strong><span>{kpi.label[index]}</span></div>)}
+    </div>}
+    <div class="detail-grid">
+      <section class="panel detail-copy"><h2>{tr ? 'Veri kapsamı' : 'Data scope'}</h2><p>{copy.data}</p></section>
+      <section class="panel detail-copy"><h2>{tr ? 'Yöntem' : 'Method'}</h2><p>{copy.method}</p></section>
+      {team && <section class="panel detail-copy"><h2>{tr ? 'Proje ekibi' : 'Project team'}</h2><p>{team.names}</p></section>}
+      {team && <section class="panel detail-copy"><h2>{tr ? 'Burak’ın katkısı' : 'Burak’s contribution'}</h2><p>{team.contribution[index]}</p></section>}
+      <section class="panel detail-copy"><h2>{tr ? 'Bulgular' : 'Findings'}</h2><p>{copy.result}</p></section>
+      <section class="panel detail-copy"><h2>{tr ? 'Sınırlamalar' : 'Limitations'}</h2><p>{copy.limits}</p></section>
+    </div>
+    {metrics[project.id] && <MetricChart lang={lang} metric={metrics[project.id]} />}
+    {project.id === 'ecg-classification' && <section class="panel chart-panel" aria-labelledby="confusion-heading">
+      <h2 id="confusion-heading">{tr ? 'Karışıklık matrisi' : 'Confusion matrix'}</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-labelledby="confusion-heading">
+        <table>
+          <thead><tr><th scope="col">{tr ? 'Gerçek sınıf' : 'Actual class'}</th>{[0,1,2,3,4].map(id => <th scope="col">{tr ? 'Tahmin' : 'Predicted'} {id}</th>)}</tr></thead>
+          <tbody>{metrics['ecg-classification'].series[0].values.map((count, id) => <tr><th scope="row">{id}</th><td>{number.format(count ?? 0)}</td>{[1,2,3,4].map(() => <td>0</td>)}</tr>)}</tbody>
+        </table>
+      </div>
+      <p class="source">{tr ? 'Test sınıf destekleri ve kayıtlı tahmin dağılımından türetildi. Tüm tahminler sınıf 0.' : 'Derived from the recorded test class counts and prediction distribution. All predictions were class 0.'}</p>
+    </section>}
+    {media[project.id] && <Gallery lang={lang} items={media[project.id]} />}
+    <section class="project-links">
+      <h2>{tr ? 'Bağlantılar' : 'Links'}</h2>
+      {project.github ? <a class="button secondary" href={project.github}>{tr ? 'Projeyi GitHub’da aç' : 'View project on GitHub'}</a> : <p>{tr ? 'Bu proje için doğrulanmış bir GitHub bağlantısı bulunmuyor.' : 'A verified GitHub link is unavailable for this project.'}</p>}
+      {project.id === 'house-prices' && <a class="button secondary" href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques">{tr ? 'Kaggle yarışması' : 'Kaggle competition'}</a>}
+    </section>
+  </article>
+</Layout>

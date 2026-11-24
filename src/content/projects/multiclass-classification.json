@@ -1,0 +1,26 @@
+{
+  "id": "multiclass-classification",
+  "category": "dl",
+  "tools": [
+    "TensorFlow",
+    "Keras",
+    "Scikit-learn"
+  ],
+  "github": null,
+  "tr": {
+    "title": "Multiclass Classification",
+    "problem": "Eğitim süresinin çok sınıflı modelin genellemesine etkisini görmek.",
+    "data": "1.200 sentetik örnek, 8 özellik, 7 sınıf ve 70/30 ayrımı.",
+    "method": "Dense(50, ReLU) → Dense(7, softmax), Adam ve categorical crossentropy. 50 ve 1.000 epoch karşılaştırması.",
+    "result": "%14,29 baseline, 50 epoch’ta %65,00 ve 1.000 epoch’ta %56,67 test accuracy.",
+    "limits": "Uzun eğitimde test kaybı 0,9989’dan 1,9324’e çıktı. Ayrı bir öğretici deney test setini doğrulama için kullandı."
+  },
+  "en": {
+    "title": "Multiclass Classification",
+    "problem": "Studying how training duration affects multiclass generalization.",
+    "data": "1,200 synthetic samples, 8 features, 7 classes and a 70/30 split.",
+    "method": "Dense(50, ReLU) → Dense(7, softmax), Adam and categorical cross-entropy. Compared 50 and 1,000 epochs.",
+    "result": "Baseline accuracy was 14.29%, with test accuracy of 65.00% at 50 epochs and 56.67% at 1,000 epochs.",
+    "limits": "Test loss rose from 0.9989 to 1.9324 with longer training. A separate teaching example reused the test split for validation."
+  }
+}

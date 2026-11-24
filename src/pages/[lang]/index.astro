@@ -1,0 +1,121 @@
+---
+import Layout from '../../components/Layout.astro';
+import Certificates from '../../components/Certificates.astro';
+import { asset, bio, categories, detail, home, languages, projects, skills, socials, timeline } from '../../data';
+export function getStaticPaths() { return languages.map(lang => ({ params: { lang }, props: { lang } })); }
+const { lang } = Astro.props;
+const tr = lang === 'tr';
+const index = tr ? 0 : 1;
+const featured = projects.filter(p => ['instacart', 'the-movies'].includes(p.id));
+const featureInfo = {
+  instacart: { image: 'instacart-kpi.webp', unit: tr ? 'milyon sipariş' : 'million orders', label: tr ? 'Perakende ve müşteri analitiği' : 'Retail and customer analytics' },
+  'the-movies': { image: 'movies-cover.webp', unit: tr ? 'film' : 'films', label: tr ? 'Film ve gişe analitiği' : 'Film and box office analytics' },
+};
+const count = new Intl.NumberFormat(lang);
+---
+<Layout lang={lang} title="Burak Gökçe · Data Scientist" description={bio[lang]} alternate={home(tr ? 'en' : 'tr')}>
+  <section class="shell hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">DATA SCIENTIST</p>
+      <h1 id="hero-title">Burak <span>Gökçe</span></h1>
+      <p class="intro">{bio[lang]}</p>
+      <div class="actions">
+        <a class="button primary" href="#projects">{tr ? 'Projeleri keşfet' : 'Explore projects'}</a>
+        <a class="button secondary" href={home(lang) + 'cv/'}>{tr ? 'CV’yi görüntüle' : 'View résumé'}</a>
+      </div>
+      <nav class="hero-socials" aria-label={tr ? 'Profesyonel profiller' : 'Professional profiles'}>
+        <a href={socials.LinkedIn}>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.5 18h-3V9h3v9zM7 7.7a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2zM18.5 18h-3v-4.8c0-1.2-.4-2-1.4-2-.8 0-1.3.6-1.5 1.1-.1.2-.1.5-.1.8V18h-3V9h3v1.3c.4-.7 1.1-1.5 2.7-1.5 1.9 0 3.3 1.2 3.3 3.8V18z"/></svg>
+          LinkedIn
+        </a>
+        <a href={socials.GitHub}>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.83c.85 0 1.71.11 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.86v2.73c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+          GitHub
+        </a>
+      </nav>
+      <div class="hero-meta">
+        <div><strong>{count.format(projects.length)}</strong><span>{tr ? 'Proje' : 'Projects'}</span></div>
+        <div><strong>{count.format(featured.length)}</strong><span>{tr ? 'Ekip vaka çalışması' : 'Team case studies'}</span></div>
+        <div><strong>3</strong><span>{tr ? 'Yıl bankacılık deneyimi' : 'Years in banking'}</span></div>
+      </div>
+    </div>
+    <div class="portrait">
+      <img src={asset('burak-gokce.webp')} alt="Burak Gökçe" width="900" height="900" fetchpriority="high" />
+    </div>
+  </section>
+  <section class="shell block" aria-labelledby="featured">
+    <h2 id="featured">{tr ? 'Öne çıkan vaka çalışmaları' : 'Featured case studies'}</h2>
+    <div class="feature-grid">
+      {featured.map(p => {
+        const info = featureInfo[p.id as keyof typeof featureInfo];
+        return <article class="feature panel">
+          <a class="feature-image" href={detail(lang,p.id)} aria-label={p[lang].title}><img src={asset(info.image)} alt="" loading="lazy" /></a>
+          <div class="feature-copy">
+            <p class="eyebrow">{info.label}</p>
+            <h3><a href={detail(lang,p.id)}>{p[lang].title}</a></h3>
+            <p>{p[lang].problem}</p>
+            <div class="feature-end"><span><strong>{p.id === 'instacart' ? count.format(3.35) : count.format(5275)}</strong> {info.unit}</span><a href={detail(lang,p.id)}>{tr ? 'Vakayı incele' : 'Read case study'}</a></div>
+          </div>
+        </article>;
+      })}
+    </div>
+  </section>
+  <section class="shell block" id="projects" aria-labelledby="projects-heading">
+    <div class="section-top"><h2 id="projects-heading">{tr ? 'Projeler' : 'Projects'}</h2><span class="source" id="project-count" aria-live="polite">{projects.length} {tr ? 'proje' : 'projects'}</span></div>
+    <div class="filters" data-project-filter data-noun={tr ? 'proje' : 'projects'} aria-label={tr ? 'Proje kategorileri' : 'Project categories'} role="group" hidden>
+      <button aria-pressed="true" data-filter="all">{tr ? 'Tümü' : 'All'}</button>
+      {Object.entries(categories[lang]).map(([id,label]) => <button aria-pressed="false" data-filter={id}>{label}</button>)}
+    </div>
+    <div class="project-grid">
+      {projects.map(p => <article data-category={p.category} class:list={['project-card','panel',p.id === 'house-prices' && 'kaggle-card']}>
+        <span class="eyebrow">{categories[lang][p.category]}</span>
+        <h3><a href={detail(lang,p.id)}>{p[lang].title}</a></h3>
+        <p>{p[lang].problem}</p>
+        {p.id === 'house-prices' && <p class="kaggle-stat"><strong>{tr ? '0,14558' : '0.14558'}</strong> {tr ? 'Kaggle gönderim skoru' : 'Kaggle submission score'}</p>}
+        <ul class="tags" aria-label={tr ? 'Teknolojiler' : 'Technologies'}>{p.tools.map(tool => <li>{tool}</li>)}</ul>
+      </article>)}
+    </div>
+  </section>
+  <section class="shell block career" id="career" aria-labelledby="career-heading">
+    <div>
+      <h2 id="career-heading">{tr ? 'Eğitim ve deneyim' : 'Education & experience'}</h2>
+      <ol class="timeline">
+        {timeline.map(item => <li><span class="source">{item.date[index]}</span><h3>{item.title[index]}</h3><strong>{item.org[index]}</strong>{item.description[index] && <p>{item.description[index]}</p>}</li>)}
+      </ol>
+    </div>
+    <div>
+      <h2>{tr ? 'Teknik yetkinlikler' : 'Technical skills'}</h2>
+      <div class="skill-list">
+        {skills.map(group => <div class="panel skill"><h3>{group.name[index]}</h3><ul class="tags">{group.items.map(item => <li>{item}</li>)}</ul></div>)}
+      </div>
+    </div>
+  </section>
+  <Certificates lang={lang} />
+</Layout>
+<script>
+  const language = document.querySelector<HTMLAnchorElement>('.language');
+  if (language) {
+    const destination = language.href;
+    const syncCertificateAnchor = () => {
+      language.href = destination + (window.location.hash === '#certificates' ? '#certificates' : '');
+    };
+    syncCertificateAnchor();
+    window.addEventListener('hashchange', syncCertificateAnchor);
+  }
+  const filter = document.querySelector<HTMLElement>('[data-project-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-category]');
+  const count = document.querySelector('#project-count');
+  if (filter && count) {
+    filter.hidden = false;
+    const buttons = filter.querySelectorAll('button');
+    buttons.forEach(button => button.addEventListener('click', () => {
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      let visible = 0;
+      cards.forEach(card => {
+        card.hidden = button.dataset.filter !== 'all' && button.dataset.filter !== card.dataset.category;
+        if (!card.hidden) visible += 1;
+      });
+      count.textContent = visible + ' ' + filter.dataset.noun;
+    }));
+  }
+</script>

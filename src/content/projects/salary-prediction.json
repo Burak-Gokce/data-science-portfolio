@@ -1,0 +1,27 @@
+{
+  "id": "salary-prediction",
+  "category": "dl",
+  "tools": [
+    "TensorFlow",
+    "Keras",
+    "RNN",
+    "LSTM"
+  ],
+  "github": null,
+  "tr": {
+    "title": "RNN & LSTM Salary Prediction",
+    "problem": "Bir yıllık ileri maaş tahmininde tekrarlayan ağları karşılaştırmak.",
+    "data": "25.000 sentetik çalışan dizisi. Maaş, sorumluluk ve şirket büyüklüğünün ilk 10 yılı, %20 test.",
+    "method": "Normalization → SimpleRNN(20) veya LSTM(20) → Dense(10, ReLU) → Dense(1). Son maaşı taşıyan baseline.",
+    "result": "Test MAE baseline için 605,15 dolar, SimpleRNN için 278,11 dolar ve LSTM için 244,51 dolar.",
+    "limits": "Dolar tutarları notebook’taki sentetik ölçeğe aittir. Gerçek ücretlere genellenemez."
+  },
+  "en": {
+    "title": "RNN & LSTM Salary Prediction",
+    "problem": "Comparing recurrent networks for one-year-ahead salary prediction.",
+    "data": "25,000 synthetic employee sequences. Ten years of salary, responsibility and company size, with a 20% test split.",
+    "method": "Normalization → SimpleRNN(20) or LSTM(20) → Dense(10, ReLU) → Dense(1). Baseline carries forward the last salary.",
+    "result": "Test MAE was $605.15 for the baseline, $278.11 for SimpleRNN and $244.51 for LSTM.",
+    "limits": "Dollar amounts use the notebook’s synthetic scale. The results do not generalize to real salaries."
+  }
+}

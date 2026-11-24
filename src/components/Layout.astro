@@ -1,0 +1,45 @@
+---
+import '../styles.css';
+import { home, socials, type Lang } from '../data';
+interface Props { lang: Lang; title: string; description: string; alternate: string }
+const { lang, title, description, alternate } = Astro.props;
+const tr = lang === 'tr';
+const canonical = Astro.site && Astro.response.status !== 404 && !/\/404\/?$/.test(Astro.url.pathname)
+  ? new URL(Astro.url.pathname, Astro.site) : undefined;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a1424" />
+    <title>{title}</title>
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="alternate" hreflang={tr ? 'en' : 'tr'} href={Astro.site ? new URL(alternate, Astro.site) : alternate} />
+  </head>
+  <body>
+    <a href="#main" class="skip">{tr ? 'İçeriğe geç' : 'Skip to content'}</a>
+    <header class="site-header">
+      <div class="shell nav">
+        <a href={home(lang)} class="brand" aria-label="Burak Gökçe"><span aria-hidden="true" class="monogram">BG</span><span>Burak Gökçe</span></a>
+        <nav aria-label={tr ? 'Ana menü' : 'Main navigation'}>
+          <a href={home(lang) + '#projects'}>{tr ? 'Projeler' : 'Projects'}</a>
+          <a href={home(lang) + '#career'}>{tr ? 'Kariyer' : 'Career'}</a>
+          <a href={home(lang) + '#certificates'}>{tr ? 'Sertifikalar' : 'Certifications'}</a>
+          <a href={home(lang) + 'cv/'}>CV</a>
+          <a class="language" href={alternate} lang={tr ? 'en' : 'tr'} hreflang={tr ? 'en' : 'tr'} aria-label={tr ? 'English' : 'Türkçe'}>{tr ? 'EN' : 'TR'}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div><strong>Burak Gökçe</strong><span>Data Scientist</span></div>
+        <nav aria-label={tr ? 'İletişim' : 'Contact'}>
+          {Object.entries(socials).map(([label, url]) => <a href={url}>{label}</a>)}
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "id": "tensorflow-playground",
+  "category": "dl",
+  "tools": [
+    "TensorFlow",
+    "Keras"
+  ],
+  "github": null,
+  "tr": {
+    "title": "TensorFlow Playground",
+    "problem": "Sinir ağı mimarisinin doğrusal olmayan desenlere nasıl uyarlandığını incelemek.",
+    "data": "İki özellikli sentetik Daire, XOR, Spiral ve regresyon örnekleri.",
+    "method": "Keras Dense katmanları. XOR için 4→2 ReLU, Spiral için 8→6→4 tanh, ikili sınıflandırmada sigmoid, regresyonda lineer çıktı.",
+    "result": "Model özetleri ve katman yapıları kayıtlı.",
+    "limits": "Tekrarlanabilir eğitim ve test metriği kaydedilmedi."
+  },
+  "en": {
+    "title": "TensorFlow Playground",
+    "problem": "Exploring how neural architectures adapt to nonlinear patterns.",
+    "data": "Two-feature synthetic circle, XOR, spiral and regression examples.",
+    "method": "Keras Dense layers. XOR uses 4→2 ReLU, spiral uses 8→6→4 tanh, binary models use sigmoid and regression uses a linear output.",
+    "result": "Saved outputs capture model summaries and layer structures.",
+    "limits": "Reproducible training and test metrics were not recorded."
+  }
+}

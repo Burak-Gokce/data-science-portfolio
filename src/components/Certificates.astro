@@ -1,0 +1,40 @@
+---
+import { certificates } from '../certificates';
+import { asset, type Lang } from '../data';
+import ImageViewer from './ImageViewer.astro';
+
+const { lang } = Astro.props as { lang: Lang };
+const tr = lang === 'tr';
+const locale = tr ? 'tr-TR' : 'en-GB';
+const date = new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeZone: 'UTC' });
+const number = new Intl.NumberFormat(locale);
+const kinds = tr
+  ? { completion: 'Bitirme sertifikası', participation: 'Katılım sertifikası' }
+  : { completion: 'Certificate of completion', participation: 'Certificate of participation' };
+---
+<section class="shell block" id="certificates" aria-labelledby="certificates-heading">
+  <h2 id="certificates-heading">{tr ? 'Sertifikalar' : 'Certifications'}</h2>
+  <div class="certificate-grid">
+    {certificates.map(item => {
+      const image = asset('certificates/' + item.id + '.webp');
+      const caption = item.issuer + ' · ' + item.title[lang];
+      return <article class:list={['panel','certificate-card',item.featured && 'certificate-featured']} data-certificate={item.id}>
+        <a class="zoom-image certificate-preview" href={image} data-caption={caption} aria-label={(tr ? 'Sertifikayı büyüt · ' : 'Enlarge certificate · ') + caption}>
+          <img src={image} alt="" loading="lazy" />
+          <span>{tr ? 'Belgeyi incele' : 'View certificate'}</span>
+        </a>
+        <div class="certificate-copy">
+          <p class="eyebrow">{item.issuer}</p>
+          <h3>{item.title[lang]}</h3>
+          <p class="certificate-kind">{kinds[item.kind]}</p>
+          <p class="certificate-meta">
+            <time datetime={item.date}>{item.date.length === 4 ? item.date : date.format(new Date(item.date))}</time>
+            {item.hours && <span>{number.format(item.hours)} {tr ? 'saat' : 'hours'}</span>}
+          </p>
+        </div>
+      </article>;
+    })}
+  </div>
+  <p class="source certificate-note">{tr ? 'Belge önizlemelerinde ad ve soyad görünür. Sertifika numaraları, QR kodları, barkodlar ve diğer hassas doğrulama bilgileri gizlenmiştir.' : 'The recipient’s name is visible in each preview. Certificate numbers, QR codes, barcodes, and other sensitive verification details are hidden.'}</p>
+  <ImageViewer lang={lang} />
+</section>

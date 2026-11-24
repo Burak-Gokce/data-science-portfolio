@@ -1,0 +1,39 @@
+---
+import type { Lang } from '../data';
+const { lang } = Astro.props as { lang: Lang };
+const tr = lang === 'tr';
+---
+<dialog id="image-viewer" aria-labelledby="image-caption">
+  <form method="dialog">
+    <button id="zoom-toggle" type="button" aria-pressed="false">{tr ? 'Yakınlaştır' : 'Zoom'}</button>
+    <button autofocus>{tr ? 'Kapat' : 'Close'} ×</button>
+  </form>
+  <div class="image-scroll" tabindex="0" role="region" aria-labelledby="image-caption"><img alt="" /></div>
+  <p id="image-caption"></p>
+</dialog>
+<script>
+  const viewer = document.querySelector<HTMLDialogElement>('#image-viewer');
+  if (viewer && typeof viewer.showModal === 'function') {
+    const image = viewer.querySelector('img')!;
+    const caption = viewer.querySelector('#image-caption')!;
+    const zoom = viewer.querySelector<HTMLButtonElement>('#zoom-toggle')!;
+    const scroll = viewer.querySelector<HTMLElement>('.image-scroll')!;
+    zoom.addEventListener('click', () => zoom.setAttribute('aria-pressed', String(scroll.classList.toggle('zoomed'))));
+    viewer.addEventListener('close', () => {
+      scroll.classList.remove('zoomed');
+      scroll.scrollTo(0, 0);
+      zoom.setAttribute('aria-pressed', 'false');
+    });
+    document.querySelectorAll<HTMLAnchorElement>('.zoom-image').forEach(link => {
+      link.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        image.src = link.href;
+        image.alt = link.dataset.caption ?? '';
+        caption.textContent = image.alt;
+        viewer.showModal();
+      });
+    });
+    viewer.addEventListener('click', event => { if (event.target === viewer) viewer.close(); });
+  }
+</script>

@@ -1,0 +1,75 @@
+---
+import type { Lang } from '../data';
+import type { Metric } from '../metrics';
+const { lang, metric } = Astro.props as { lang: Lang; metric: Metric };
+const tr = lang === 'tr';
+const i = tr ? 0 : 1;
+const localize = (values: string[]) => values[i] ?? values[0];
+const labels = metric.labels.map(localize);
+const series = metric.series.map(s => ({ ...s, title: localize(s.title) }));
+const number = new Intl.NumberFormat(lang, { maximumFractionDigits: 6 });
+const display = (value: number | null, unit?: string) => value === null ? '—' : number.format(value) + (unit ? ' ' + unit : '');
+---
+<section class="panel chart-panel" aria-labelledby="metrics-heading">
+  <div class="section-top">
+    <h2 id="metrics-heading">{tr ? 'Model ve ölçüm sonuçları' : 'Models and results'}</h2>
+    <div class="metric-control" hidden>
+      <label for="metric-picker">{tr ? 'Ölçüm' : 'Metric'}</label>
+      <select id="metric-picker">
+        {series.map((s, index) => <option value={index}>{s.title}</option>)}
+      </select>
+    </div>
+  </div>
+  <div class="chart" data-chart={JSON.stringify({ labels, series, locale: lang })} hidden>
+    <canvas aria-hidden="true"></canvas>
+  </div>
+  <div class="table-scroll" tabindex="0" role="region" aria-label={tr ? 'Metrik tablosu' : 'Metrics table'}>
+    <table>
+      <thead><tr><th scope="col">{tr ? 'Karşılaştırma' : 'Comparison'}</th>{series.map(s => <th scope="col">{s.title}</th>)}</tr></thead>
+      <tbody>{labels.map((label, index) => <tr><th scope="row">{label}</th>{series.map(s => <td>{display(s.values[index], s.unit)}</td>)}</tr>)}</tbody>
+    </table>
+  </div>
+  <p class="source">{tr ? 'Kaynak' : 'Source'} · {typeof metric.source === 'string' ? metric.source : localize(metric.source)}</p>
+</section>
+<script>
+  import { BarController, BarElement, CategoryScale, Chart, LinearScale, Tooltip } from 'chart.js';
+  Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
+  const chartHost = document.querySelector<HTMLElement>('[data-chart]');
+  const canvas = chartHost?.querySelector('canvas');
+  if (chartHost && canvas) {
+    const payload = JSON.parse(chartHost.dataset.chart!);
+    const picker = document.querySelector<HTMLSelectElement>('#metric-picker');
+    chartHost.hidden = false;
+    if (picker && payload.series.length > 1) picker.closest<HTMLElement>('.metric-control')!.hidden = false;
+    const chart = new Chart(canvas, {
+      type: 'bar',
+      data: { labels: payload.labels, datasets: [{ data: payload.series[0].values, label: payload.series[0].title, backgroundColor: '#70c1f4', borderRadius: 5, maxBarThickness: 32 }] },
+      options: {
+        locale: payload.locale, indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+        scales: {
+          x: { beginAtZero: true, ticks: { color: '#bac9dc' }, grid: { color: '#263951' } },
+          y: { ticks: { color: '#e8f3ff', callback(value) { const label = this.getLabelForValue(Number(value)); return label.length > 23 ? label.slice(0, 22) + '…' : label; } }, grid: { display: false } },
+        },
+        plugins: { tooltip: { callbacks: { label(context) {
+          const selected = payload.series[Number(picker?.value ?? 0)];
+          const value = new Intl.NumberFormat(payload.locale, { maximumFractionDigits: 6 }).format(context.parsed.x ?? 0);
+          return selected.title + ' · ' + value + (selected.unit ? ' ' + selected.unit : '');
+        } } } },
+      },
+    });
+    function updateAxis() {
+      const series = payload.series[Number(picker?.value ?? 0)];
+      const axis = chart.options.scales?.x;
+      if (axis) axis.max = series.unit === '%' ? 100 : /^(F1|ROC-AUC|PR-AUC|Recall|Precision|Test R²)$/.test(series.title) ? 1 : undefined;
+    }
+    updateAxis();
+    chart.update();
+    picker?.addEventListener('change', () => {
+      const selected = payload.series[Number(picker.value)];
+      chart.data.datasets[0].data = selected.values;
+      chart.data.datasets[0].label = selected.title;
+      updateAxis();
+      chart.update();
+    });
+  }
+</script>
